@@ -7,7 +7,7 @@
 
 ## Info
 
-- [Lumen 9 Info](https://lumen.laravel.com/docs/9.x)
+- [Laravel 9 Info](https://laravel.com/docs/9.x)
 
 ## Installation/Configuration
 
