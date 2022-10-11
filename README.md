@@ -77,6 +77,11 @@ docker-compose exec app php artisan migrate --seed
 
 ### URL http://localhost:8008
 
+### ENDPOINT DOCS
+```
+http://localhost:8008/docs
+```
+
 ### Configure Access Local Database
 
 ```
