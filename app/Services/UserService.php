@@ -41,9 +41,7 @@ class UserService
      */
     public function store(array $data): JsonResponse
     {
-        DB::transaction(function () use (&$data){
-            $this->userRepository->store($data);
-        });
+        DB::transaction(fn() => $this->userRepository->store($data));
 
         return $this->success('User successfully created', Response::HTTP_CREATED);
 
@@ -66,9 +64,7 @@ class UserService
      */
     public function update(int $id, array $data): JsonResponse
     {
-        DB::transaction(function () use(&$id, &$data) {
-            $this->userRepository->update($id, $data);
-        });
+        DB::transaction(fn() => $this->userRepository->update($id, $data) );
 
         return $this->success('User successfully updated');
     }
@@ -80,9 +76,8 @@ class UserService
      */
     public function destroy(int $id): JsonResponse
     {
-        DB::transaction( function () use (&$id) {
-            $this->userRepository->destroy($id);
-        });
+        DB::transaction(fn() => $this->userRepository->destroy($id));
+
         return $this->success('User successfully deleted');
     }
 

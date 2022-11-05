@@ -40,9 +40,8 @@ class FavoriteListService
      */
     public function store(array $data): JsonResponse
     {
-        DB::transaction(function () use (&$data) {
-            $this->favoriteListRepository->store($data);
-        });
+        DB::transaction(fn() => $this->favoriteListRepository->store($data) );
+
         return $this->success('Favorite list successfully created', Response::HTTP_CREATED);
     }
 
@@ -63,9 +62,8 @@ class FavoriteListService
      */
     public function update(int $id, array $data): JsonResponse
     {
-        DB::transaction(function () use (&$id, &$data) {
-            $this->favoriteListRepository->update($id, $data);
-        });
+        DB::transaction( fn() => $this->favoriteListRepository->update($id, $data));
+
         return $this->success('Favorite list successfully updated');
     }
 
@@ -76,9 +74,8 @@ class FavoriteListService
      */
     public function destroy(int $id): JsonResponse
     {
-        DB::transaction(function () use (&$id,) {
-            $this->favoriteListRepository->destroy($id);
-        });
+        DB::transaction(fn() =>$this->favoriteListRepository->destroy($id));
+
         return $this->success('Favorite list successfully deleted');
     }
 

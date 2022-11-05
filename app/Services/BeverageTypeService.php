@@ -40,9 +40,7 @@ class BeverageTypeService
      */
     public function store(array $data): JsonResponse
     {
-        DB::transaction(function () use (&$data) {
-            $this->beverageTypeRepository->store($data);
-        });
+        DB::transaction(fn() =>$this->beverageTypeRepository->store($data) );
 
         return $this->success('Beverage type successfully created', Response::HTTP_CREATED);
     }
@@ -65,9 +63,7 @@ class BeverageTypeService
      */
     public function update(int $id, array $data): JsonResponse
     {
-        DB::transaction(function () use (&$id, &$data) {
-            $this->beverageTypeRepository->update($id, $data);
-        });
+        DB::transaction(fn() => $this->beverageTypeRepository->update($id, $data));
 
         return $this->success('Beverage type successfully updated');
     }
@@ -79,9 +75,7 @@ class BeverageTypeService
      */
     public function destroy(int $id): JsonResponse
     {
-        DB::transaction(function () use (&$id) {
-            $this->beverageTypeRepository->destroy($id);
-        });
+        DB::transaction(fn () => $this->beverageTypeRepository->destroy($id) );
 
         return $this->success('Beverage type successfully deleted');
     }
