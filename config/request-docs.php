@@ -8,7 +8,7 @@ return [
 
     /*
     * Route where request docs will be served from
-    * localhost:8008/api/docs
+    * localhost:8008/docs
     */
     'url' => 'docs',
     'middlewares' => [
