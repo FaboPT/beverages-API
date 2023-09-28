@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\UserResource;
 use App\Repositories\UserRepository;
 use App\Traits\ResponseAPI;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,9 +42,14 @@ class UserService
      */
     public function store(array $data): JsonResponse
     {
-        DB::transaction(fn() => $this->userRepository->store($data));
+        try {
+            DB::transaction(fn() => $this->userRepository->store($data));
 
-        return $this->success('User successfully created', Response::HTTP_CREATED);
+            return $this->success('User successfully created', Response::HTTP_CREATED);
+
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode() ?: Response::HTTP_BAD_REQUEST);
+        }
 
     }
 
@@ -64,9 +70,14 @@ class UserService
      */
     public function update(int $id, array $data): JsonResponse
     {
-        DB::transaction(fn() => $this->userRepository->update($id, $data) );
+        try {
+            DB::transaction(fn() => $this->userRepository->update($id, $data));
 
-        return $this->success('User successfully updated');
+            return $this->success('User successfully updated');
+
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode() ?: Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -76,9 +87,14 @@ class UserService
      */
     public function destroy(int $id): JsonResponse
     {
-        DB::transaction(fn() => $this->userRepository->destroy($id));
+        try {
+            DB::transaction(fn() => $this->userRepository->destroy($id));
 
-        return $this->success('User successfully deleted');
+            return $this->success('User successfully deleted');
+
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode() ?: Response::HTTP_BAD_REQUEST);
+        }
     }
 
 

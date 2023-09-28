@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Http\Resources\BeverageResource;
 use App\Repositories\BeverageRepository;
 use App\Traits\ResponseAPI;
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,8 +41,13 @@ class BeverageService
      */
     public function store(array $data): JsonResponse
     {
-        DB::transaction(fn() => $this->beverageRepository->store($data));
-        return $this->success('Beverage successfully created', Response::HTTP_CREATED);
+        try {
+            DB::transaction(fn() => $this->beverageRepository->store($data));
+
+            return $this->success('Beverage successfully created', Response::HTTP_CREATED);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode() ?: Response::HTTP_BAD_REQUEST);
+        }
 
     }
 
@@ -62,8 +68,14 @@ class BeverageService
      */
     public function update(int $id, array $data): JsonResponse
     {
-        DB::transaction(fn() => $this->beverageRepository->update($id, $data));
-        return $this->success('Beverage successfully updated');
+        try {
+            DB::transaction(fn() => $this->beverageRepository->update($id, $data));
+
+            return $this->success('Beverage successfully updated');
+
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode() ?: Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -73,8 +85,14 @@ class BeverageService
      */
     public function destroy(int $id): JsonResponse
     {
-        DB::transaction(fn() => $this->beverageRepository->destroy($id));
-        return $this->success('Beverage successfully deleted');
+        try {
+            DB::transaction(fn() => $this->beverageRepository->destroy($id));
+
+            return $this->success('Beverage successfully deleted');
+
+        } catch (Exception $e) {
+            return $this->error($e->getMessage(), $e->getCode() ?: Response::HTTP_BAD_REQUEST);
+        }
     }
 
 
